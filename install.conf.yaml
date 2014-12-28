@@ -1,0 +1,27 @@
+---
+  - clean:
+    - "~"
+
+  - link:
+
+    # shell configuration
+    ~/.shellrc: shellrc
+    ~/.bashrc: shellrc/bashrc
+    ~/.bashprofile: shellrc/bashprofile
+    ~/.inputrc: shellrc/inputrc
+
+    # regular dotfiles
+    ~/.ackrc: .ackrc
+    ~/.ctags: .ctags
+    ~/.git: .git
+    ~/.gitconfig: .gitconfig
+    ~/.gitignore: .gitignore
+    ~/.gitmodules: .gitmodules
+    ~/.hushlogin: .hushlogin
+    ~/.irbrc: .irbrc
+    ~/.pryrc: .pryrc
+    ~/.screenrc: .screenrc
+    ~/.tmux: .tmuxconf
+    ~/.wgetrc: .wgetrc
+
+  - shell: []
