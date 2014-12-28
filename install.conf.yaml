@@ -1,19 +1,17 @@
----
-  - clean:
+- clean:
     - "~"
 
-  - link:
+- link:
 
     # shell configuration
-    ~/.shellrc: shellrc
+    ~/.shellrc: shellrc/
     ~/.bashrc: shellrc/bashrc
-    ~/.bashprofile: shellrc/bashprofile
+    ~/.bash_profile: shellrc/bash_profile
     ~/.inputrc: shellrc/inputrc
 
     # regular dotfiles
     ~/.ackrc: .ackrc
     ~/.ctags: .ctags
-    ~/.git: .git
     ~/.gitconfig: .gitconfig
     ~/.gitignore: .gitignore
     ~/.gitmodules: .gitmodules
@@ -21,7 +19,7 @@
     ~/.irbrc: .irbrc
     ~/.pryrc: .pryrc
     ~/.screenrc: .screenrc
-    ~/.tmux: .tmuxconf
+    ~/.tmux.conf: .tmux.conf
     ~/.wgetrc: .wgetrc
 
-  - shell: []
+- shell: []
