@@ -20,9 +20,27 @@ if [ -d $HOME/.shellrc/bashrc.d ]; then
   done
 fi
 
+# load all files from .shell/bashrc.d.osx directory
+if [[ "$(uname)" == "Darwin" ]]; then
+  if [ -d $HOME/.shellrc/bashrc.d.osx ]; then
+    for file in $HOME/.shellrc/bashrc.d.osx/*.bash; do
+      source $file
+    done
+  fi
+fi
+
 # load all files from .shell/rc.d directory
 if [ -d $HOME/.shellrc/rc.d ]; then
   for file in $HOME/.shellrc/rc.d/*.sh; do
     source $file
   done
+fi
+
+# load all files from .shell/rc.d.osx directory
+if [[ "$(uname)" == "Darwin" ]]; then
+  if [ -d $HOME/.shellrc/rc.d.osx ]; then
+    for file in $HOME/.shellrc/rc.d.osx/*.bash; do
+      source $file
+    done
+  fi
 fi

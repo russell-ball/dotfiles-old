@@ -8,3 +8,12 @@ if [ -d $HOME/.shellrc/login.d ]; then
     source $file
   done
 fi
+
+# load all files from .shell/login.d directory
+if [[ "$(uname)" == "Darwin" ]]; then
+  if [ -d $HOME/.shellrc/login.d.osx ]; then
+    for file in $HOME/.shellrc/login.d.osx/*.sh; do
+      source $file
+    done
+  fi
+fi
