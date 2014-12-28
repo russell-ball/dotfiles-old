@@ -3,5 +3,5 @@ if which vimpager &> /dev/null; then
   export PAGER="vimpager"
 else
   export MANPAGER="less -X"
-  export PAGER="less"
+  export PAGER="less -r" # support color codes
 fi
