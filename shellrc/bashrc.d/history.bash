@@ -8,6 +8,3 @@ export HISTFILE=$HOME/.history
 
 # Ignore lines starting with a whitespace, as well as duplicates
 export HISTCONTROL=ignoredups:ignorespace
-
-# Make some commands not show up in history
-export HISTIGNORE="ls:cd:cd -:pwd:exit:date:*"

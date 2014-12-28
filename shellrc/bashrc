@@ -16,7 +16,7 @@ fi
 # load all files from .shell/bashrc.d directory
 if [ -d $HOME/.shellrc/bashrc.d ]; then
   for file in $HOME/.shellrc/bashrc.d/*.bash; do
-    source $file
+    [ -e "$file" ] && source $file
   done
 fi
 
@@ -24,7 +24,7 @@ fi
 if [[ "$(uname)" == "Darwin" ]]; then
   if [ -d $HOME/.shellrc/bashrc.d.osx ]; then
     for file in $HOME/.shellrc/bashrc.d.osx/*.bash; do
-      source $file
+      [ -e "$file" ] && source $file
     done
   fi
 fi
@@ -32,7 +32,7 @@ fi
 # load all files from .shell/rc.d directory
 if [ -d $HOME/.shellrc/rc.d ]; then
   for file in $HOME/.shellrc/rc.d/*.sh; do
-    source $file
+    [ -e "$file" ] && source $file
   done
 fi
 
@@ -40,7 +40,7 @@ fi
 if [[ "$(uname)" == "Darwin" ]]; then
   if [ -d $HOME/.shellrc/rc.d.osx ]; then
     for file in $HOME/.shellrc/rc.d.osx/*.bash; do
-      source $file
+      [ -e "$file" ] && source $file
     done
   fi
 fi
