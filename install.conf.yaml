@@ -22,4 +22,7 @@
     ~/.tmux.conf: .tmux.conf
     ~/.wgetrc: .wgetrc
 
+    # custom scripts
+    ~/bin: bin/
+
 - shell: []
