@@ -5,9 +5,15 @@
 
     # shell configuration
     ~/.shellrc: shellrc/
-    ~/.bashrc: shellrc/bashrc
-    ~/.bash_profile: shellrc/bash_profile
-    ~/.inputrc: shellrc/inputrc
+    ~/.bashrc:
+      force: true
+      path: shellrc/bashrc
+    ~/.bash_profile:
+      force: true
+      path: shellrc/bash_profile
+    ~/.inputrc:
+      force: true
+      path: shellrc/inputrc
 
     # regular dotfiles
     ~/.ackrc: .ackrc
@@ -22,7 +28,19 @@
     ~/.tmux.conf: .tmux.conf
     ~/.wgetrc: .wgetrc
 
+    # vim
+    ~/.vim:
+      force: true
+      path: vimfiles/
+    ~/.vimrc:
+      force: true
+      path: vimfiles/vimrc
+    ~/.gvimrc:
+      force: true
+      path: vimfiles/gvimrc
+
     # custom scripts
     ~/bin: bin/
 
-- shell: []
+- shell:
+    - [ "git submodule update --init --recursive", "Installing submodules" ]
