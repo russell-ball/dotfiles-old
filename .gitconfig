@@ -75,3 +75,6 @@
 [user]
   name = "Jacob Shafton"
   email = jacob@shafton.com
+
+[credential]
+	helper = osxkeychain
