@@ -44,7 +44,8 @@
     # custom scripts
     ~/bin: bin/
 
-    # rbenv configuration
+    # Ruby configuration
+    ~/.gemrc: .gemrc
     ~/.rbenv: .rbenv/
 
 - shell:
