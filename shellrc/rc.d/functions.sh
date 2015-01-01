@@ -199,3 +199,13 @@ function httpmon() {
   TCPDUMPARG="tcp port $PORT and (((ip[2:2] - ((ip[0]&0xf)<<2)) - ((tcp[12]&0xf0)>>2)) != 0)"
   sudo tcpdump -s 0 -A -i lo0 $TCPDUMPARG
 }
+
+# More intelligent man pages - use `help` for built-ins
+man () {
+  case "$(type -t "$1"):$1" in
+    builtin:*) help "$1" | "${PAGER:-less}";;     # built-in
+    *[[?*]*) help "$1" | "${PAGER:-less}";;       # pattern
+    *) command -p man "$@";;  # something else, presumed to be an external command
+                              # or options for the man command or a section number
+  esac
+}
