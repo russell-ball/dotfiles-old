@@ -44,6 +44,9 @@
     # custom scripts
     ~/bin: bin/
 
+    # rbenv configuration
+    ~/.rbenv: .rbenv/
+
 - shell:
     - [ "git submodule update --init --recursive", "Installing submodules" ]
     - [ "cd vimfiles && git pull origin master", "Getting latest vim configuration" ]
