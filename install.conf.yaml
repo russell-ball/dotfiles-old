@@ -46,7 +46,9 @@
 
     # Ruby configuration
     ~/.gemrc: .gemrc
-    ~/.rbenv/default-gems: rbenv/default-gems
+    ~/.rbenv/default-gems:
+      force: true
+      path: rbenv/default-gems
 
 - shell:
     - [ "git submodule update --init --recursive", "Installing submodules" ]
