@@ -1,6 +1,4 @@
 alias s="subl ."
-alias o="open"
-alias oo="open ."
 
 # Flush Directory Service cache
 alias flush="dscacheutil -flushcache && killall -HUP mDNSResponder"

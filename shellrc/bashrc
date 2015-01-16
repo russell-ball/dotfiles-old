@@ -39,7 +39,7 @@ fi
 # load all files from .shell/rc.d.osx directory
 if [[ "$(uname)" == "Darwin" ]]; then
   if [ -d $HOME/.shellrc/rc.d.osx ]; then
-    for file in $HOME/.shellrc/rc.d.osx/*.bash; do
+    for file in $HOME/.shellrc/rc.d.osx/*.sh; do
       [ -e "$file" ] && source $file
     done
   fi
