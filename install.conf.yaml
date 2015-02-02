@@ -53,6 +53,5 @@
 
 - shell:
     - [ "git submodule update --init --recursive", "Installing submodules" ]
-    - [ "source ~/.bashrc", "Configure shell"]
     - [ "cd vimfiles && git pull origin master", "Getting latest vim configuration" ]
     - [ "vim +PlugInstall +qall", "Installing vim plugins" ]
