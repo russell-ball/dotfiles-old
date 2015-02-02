@@ -47,6 +47,7 @@
     # Ruby configuration
     ~/.gemrc: .gemrc
     ~/.rbenv/default-gems:
+      create: true
       force: true
       path: rbenv/default-gems
 
