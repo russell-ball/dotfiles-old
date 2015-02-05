@@ -209,3 +209,7 @@ man () {
                            # or options for the man command or a section number
   esac
 }
+
+function delKnownHost() {
+  sed -e "$1d" -i '' ~/.ssh/known_hosts
+}
