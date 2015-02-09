@@ -4,6 +4,7 @@ alias ....="cd ../../.."
 alias -- -="cd -"
 
 alias h="history"
+alias hg="history | grep"
 alias vs="vim -S Session.vim"
 alias tf="tail -f"
 
