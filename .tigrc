@@ -9,12 +9,15 @@ bind generic gh @sh -c "open 'https://'$(git remote -v | grep -Eo 'github.com[:/
 
 # Push local changes to origin
 bind main P !git push origin
+bind stage P none
+bind stage P !git push origin
 # Pull remote changes locally
 bind main p !@git pull
 
 # Commit
 bind main C none
 bind main C !git commit
+bind stage C !git commit
 
 # amend the last commit
 bind status a !?git commit --amend
