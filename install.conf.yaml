@@ -29,6 +29,7 @@
     ~/.wgetrc: .wgetrc
     ~/.mackup: .mackup/
     ~/.mackup.cfg: .mackup.cfg
+    ~/.tigrc: .tigrc
 
     # vim
     ~/.vim:
