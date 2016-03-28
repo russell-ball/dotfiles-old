@@ -51,10 +51,6 @@
   added = yellow
   changed = green
   untracked = cyan
-[merge]
-  # Include summaries of merged commits in newly created merge commit messages
-  log = true
-	tool = fugitive
 
 # URL shorthands
 [url "git@github.com:"]
@@ -71,23 +67,38 @@
   insteadOf = "gist:"
 
 [push]
-  default = "upstream"
+  default = "simple"
 
 [user]
   name = "Jacob Shafton"
   email = jacob@shafton.com
 
-[credential]
-	helper = osxkeychain
+[merge]
+  # Include summaries of merged commits in newly created merge commit messages
+  log = true
+  tool = vimdiff
+  conflictstyle = diff3
+[mergetool]
+  prompt = false
+  keepBackup = false
+[mergetool "vimdiff"]
+  cmd = $EDITOR -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
 [mergetool "fugitive"]
-	cmd = vim -f -c \"Gdiff\" \"$MERGED\"
-[difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path =
+  cmd = vim -f -c \"Gdiff\" \"$MERGED\"
 [mergetool "sourcetree"]
 	cmd = /opt/homebrew-cask/Caskroom/sourcetree/2.0.4/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
+
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path =
+
+[credential]
+	helper = osxkeychain
+
 [github]
 	user = jshafton
 [pull]
 	rebase = preserve
+[rerere]
+	enabled = true

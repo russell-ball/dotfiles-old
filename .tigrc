@@ -1,16 +1,29 @@
+# some general options
+set mouse = true
+set line-graphics = utf-8
+
 # interactive rebase
-bind main grb !git rebase -i %(commit)
+bind main grbi !git rebase -i %(commit)
+bind generic grbc !git rebase --continue
 
 # Tag the selected commit
 bind main gt !@git tag %(prompt) %(commit)
 
+# Cherry-pick the selected commit
+bind main gcp !?@git cherry-pick %(commit)
+
+# Reset to the selected commit
+bind main grh !?@git reset %(commit) --hard
+
 # Open the commit on Github
 bind generic gh @sh -c "open 'https://'$(git remote -v | grep -Eo 'github.com[:/][^.]+' | head -1 | tr : /)'/commit/%(commit)'"
+bind generic gpr @?hub -o -b %(branch) -h master
 
 # Push local changes to origin
-bind main P !git push origin
-bind stage P none
+bind main P ?@sh -c "git push origin `git rev-parse --abbrev-ref HEAD`"
+bind status P !git push origin
 bind stage P !git push origin
+
 # Pull remote changes locally
 bind main p !@git pull
 
@@ -22,8 +35,14 @@ bind stage C !git commit
 # amend the last commit
 bind status a !?git commit --amend
 
+# Open git mergetool on file
+bind status gmt !?git mergetool %(file)
+
 # Delete a file
 bind status D !@?rm %(file)
+
+# Checkout the selected commit
+bind main gco !?git checkout %(commit)
 
 # Vim-like key bindings
 bind generic h scroll-left
@@ -33,15 +52,10 @@ bind generic l scroll-right
 
 bind generic g  none
 bind generic gg move-first-line
-bind generic gj next
-bind generic gk previous
-bind generic gp parent
-bind generic gP back
-bind generic gn view-next
-
 bind main    G  none
 bind generic G  move-last-line
 
+# Views
 bind generic v  none
 bind generic vm view-main
 bind generic vd view-diff
@@ -57,6 +71,7 @@ bind generic vg view-grep
 bind generic vp view-pager
 bind generic vh view-help
 
+# Option toggles
 bind generic o  none
 bind generic oo :toggle sort-order
 bind generic os :toggle sort-field
@@ -89,8 +104,12 @@ bind generic us stage-split-chunk
 bind generic <Ctrl-x> view-close
 
 # Branch/refs view
-bind branch     C !?@git checkout %(branch)
-bind branch     F !?git %(prompt) origin %(branch) -f
-bind branch     D !?git branch -d %(branch)
-bind branch     & !?git rebase %(branch)
-bind branch     + !?git merge %(branch)
+bind branch C ?@git checkout %(branch)
+bind branch F ?git %(prompt) origin %(branch) -f
+bind branch - ?git branch -D %(branch)
+bind branch ! ?git push origin :%(branch)
+bind branch & ?git rebase %(branch)
+bind branch + ?git merge %(branch)
+bind branch P ?git push origin %(branch)
+
+bind generic S :source ~/.tigrc # reload ~/.tigrc
