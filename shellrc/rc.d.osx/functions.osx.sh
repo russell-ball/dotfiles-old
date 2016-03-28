@@ -17,6 +17,12 @@ function server() {
   python -c $'import SimpleHTTPServer;\nmap = SimpleHTTPServer.SimpleHTTPRequestHandler.extensions_map;\nmap[""] = "text/plain";\nfor key, value in map.items():\n\tmap[key] = value + ";charset=UTF-8";\nSimpleHTTPServer.test();' "$port"
 }
 
+# Restart bluetooth due to OSX shenanigans
+function restart_bluetooth() {
+  sudo kextunload -b com.apple.iokit.BroadcomBluetoothHostControllerUSBTransport
+  sudo kextload -b $BTKEXT com.apple.iokit.BroadcomBluetoothHostControllerUSBTransport
+}
+
 function ip_from_instance() {
   echo $(aws ec2 describe-instances --region us-east-1 --filters "Name=tag:Name,Values=\"$1\"" --output text --query 'Reservations[*].Instances[*].PrivateIpAddress')
 }
