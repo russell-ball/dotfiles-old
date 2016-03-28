@@ -4,3 +4,6 @@
 [submodule "vimfiles"]
 	path = vimfiles
 	url = https://github.com/jshafton/vimfiles.git
+[submodule "vendor/nvm"]
+	path = vendor/nvm
+	url = https://github.com/creationix/nvm.git

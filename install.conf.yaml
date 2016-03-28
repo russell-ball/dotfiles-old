@@ -42,6 +42,11 @@
       force: true
       path: vimfiles/gvimrc
 
+    # nvm
+    ~/.nvm:
+      force: true
+      path: vendor/nvm/
+
     # custom scripts
     ~/bin: bin/
 
