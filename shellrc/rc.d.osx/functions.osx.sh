@@ -18,23 +18,31 @@ function server() {
 }
 
 # Restart bluetooth due to OSX shenanigans
-function restart_bluetooth() {
+function restart-bluetooth() {
   sudo kextunload -b com.apple.iokit.BroadcomBluetoothHostControllerUSBTransport
   sudo kextload -b $BTKEXT com.apple.iokit.BroadcomBluetoothHostControllerUSBTransport
 }
 
-function ip_from_instance() {
+function ec2-ip-from-id() {
+  echo $(aws ec2 describe-instances --region us-east-1 --instance-ids $1 --output text --query 'Reservations[*].Instances[*].PrivateIpAddress')
+}
+
+function ec2-ip-from-name() {
   echo $(aws ec2 describe-instances --region us-east-1 --filters "Name=tag:Name,Values=\"$1\"" --output text --query 'Reservations[*].Instances[*].PrivateIpAddress')
 }
 
-function ip_from_tag() {
+function ec2-ip-from-tag() {
   echo $(aws ec2 describe-instances --region us-east-1 --filters "Name=tag:$1,Values=\"$2\"" --output text --query 'Reservations[*].Instances[*].PrivateIpAddress' | head -n1)
 }
 
-function ssh-aws-name() {
-  ssh $(ip_from_instance "$1") "${@:2}"
+function ssh-ec2-id() {
+  ssh $(ec2-ip-from-id "$1") "${@:2}"
 }
 
-function ssh-aws-tag() {
-  ssh $(ip_from_tag "$1") "${@:2}"
+function ssh-ec2-name() {
+  ssh $(ec2-ip-from-name "$1") "${@:2}"
+}
+
+function ssh-ec2-tag() {
+  ssh $(ec2-ip-from-tag "$1" "$2") "${@:3}"
 }
