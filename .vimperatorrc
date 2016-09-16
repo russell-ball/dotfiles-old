@@ -1,0 +1,21 @@
+" j,k * 5
+noremap j 5j
+noremap k 5k
+
+" d/u for down/up
+nnoremap d <PageDown>
+nnoremap u <PageUp>
+
+" x/X for close/undo close tab
+nnoremap x :quit<CR>
+nnoremap X :undo<CR>
+
+" J/K for tab movement
+nnoremap J gT
+nnoremap K gt
+
+" hint -> alphabet
+set hintchars=asdfghjkzxcvbnm
+
+" increase hint visibility
+:highlight Hint font-size:125%;color:white;background-color:black;padding:2px;

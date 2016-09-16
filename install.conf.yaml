@@ -30,6 +30,7 @@
     ~/.mackup: .mackup/
     ~/.mackup.cfg: .mackup.cfg
     ~/.tigrc: .tigrc
+    ~/.vimperatorrc: .vimperatorrc
 
     # vim
     ~/.vim:

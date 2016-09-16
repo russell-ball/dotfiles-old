@@ -8,6 +8,7 @@ bind generic grbc !git rebase --continue
 
 # Tag the selected commit
 bind main gt !@git tag %(prompt) %(commit)
+bind main ! !@git revert %(commit)
 
 # Cherry-pick the selected commit
 bind main gcp !?@git cherry-pick %(commit)
@@ -16,13 +17,14 @@ bind main gcp !?@git cherry-pick %(commit)
 bind main grh !?@git reset %(commit) --hard
 
 # Open the commit on Github
-bind generic gh @sh -c "open 'https://'$(git remote -v | grep -Eo 'github.com[:/][^.]+' | head -1 | tr : /)'/commit/%(commit)'"
-bind generic gpr @?hub -o -b %(branch) -h master
+bind generic gho @sh -c "open 'https://'$(git remote -v | grep -Eo 'github.com[:/][^.]+' | head -1 | tr : /)'/commit/%(commit)'"
+bind generic ghpr @?hub -o -b %(branch) -h master
 
 # Push local changes to origin
 bind main P ?@sh -c "git push origin `git rev-parse --abbrev-ref HEAD`"
 bind status P !git push origin
 bind stage P !git push origin
+bind generic gpf !git push --force
 
 # Pull remote changes locally
 bind main p !@git pull
@@ -43,6 +45,9 @@ bind status D !@?rm %(file)
 
 # Checkout the selected commit
 bind main gco !?git checkout %(commit)
+
+# Checkout master
+bind main gcm !?git checkout master
 
 # Vim-like key bindings
 bind generic h scroll-left
