@@ -4,6 +4,7 @@ set line-graphics = utf-8
 
 # interactive rebase
 bind main grbi !git rebase -i %(commit)
+bind main grbm !git rebase -i master
 bind generic grbc !git rebase --continue
 
 # Tag the selected commit
@@ -12,6 +13,9 @@ bind main ! !@git revert %(commit)
 
 # Cherry-pick the selected commit
 bind main gcp !?@git cherry-pick %(commit)
+
+# Copy the selected commit's hash to the clipboard
+bind generic yh !@bash -c "echo -n %(commit) | pbcopy"
 
 # Reset to the selected commit
 bind main grh !?@git reset %(commit) --hard
@@ -62,6 +66,7 @@ bind generic G  move-last-line
 
 # Views
 bind generic v  none
+bind generic y  none
 bind generic vm view-main
 bind generic vd view-diff
 bind generic vl view-log
