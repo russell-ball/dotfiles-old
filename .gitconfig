@@ -97,7 +97,7 @@
 
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
+	path =
 
 [credential]
 	helper = osxkeychain
@@ -108,3 +108,12 @@
 	rebase = preserve
 [rerere]
 	enabled = true
+
+[diff "ansible-vault"]
+  textconv = ansible-vault view
+  # Do not cache the vault contents
+  cachetextconv = false
+
+[merge "ansible-vault"]
+    name = ansible-vault merge driver
+    driver = ansible-vault-merge -- %O %A %B %P
