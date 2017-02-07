@@ -18,3 +18,5 @@ Session.vim
 
 # Ctags files
 tags
+
+vendor/

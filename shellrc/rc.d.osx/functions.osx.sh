@@ -32,7 +32,7 @@ function ec2-ip-from-name() {
 }
 
 function ec2-ip-from-tag() {
-  echo $(aws ec2 describe-instances --region us-east-1 --filters "Name=tag:$1,Values=\"$2\"" --output text --query 'Reservations[*].Instances[*].PrivateIpAddress' | head -n1)
+  echo $(aws ec2 describe-instances --region us-east-1 --filters "Name=tag:$1,Values=\"$2\"" --output text --query 'Reservations[*].Instances[*].PrivateIpAddress')
 }
 
 function ec2-ip-from-environment-tag() {
