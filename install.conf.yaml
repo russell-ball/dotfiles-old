@@ -42,6 +42,12 @@
     ~/.gvimrc:
       force: true
       path: vimfiles/gvimrc
+    ~/.config/nvim:
+      force: true
+      path: vimfiles/
+    ~/.config/nvim/init.vim:
+      force: true
+      path: vimfiles/vimrc
 
     # custom scripts
     ~/bin: bin/
