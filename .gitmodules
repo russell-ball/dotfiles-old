@@ -4,3 +4,6 @@
 [submodule "vimfiles"]
 	path = vimfiles
 	url = https://github.com/jshafton/vimfiles.git
+[submodule "fzf"]
+	path = fzf
+	url = https://github.com/junegunn/fzf.git

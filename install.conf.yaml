@@ -45,9 +45,6 @@
     ~/.config/nvim:
       force: true
       path: vimfiles/
-    ~/.config/nvim/init.vim:
-      force: true
-      path: vimfiles/vimrc
 
     # custom scripts
     ~/bin: bin/
@@ -60,5 +57,7 @@
       path: rbenv/default-gems
 
 - shell:
-    - [ "git submodule update --init --recursive", "Installing submodules" ]
-    - [ "cd vimfiles && git pull origin master", "Getting latest vim configuration" ]
+    - [ "git submodule update --init --recursive",                        "Installing submodules" ]
+    - [ "cd fzf && git pull origin master",                               "Getting latest fzf configuration" ]
+    - [ "cd fzf && ./install --key-bindings --completion --no-update-rc", "Installing fzf" ]
+    - [ "cd vimfiles && git pull origin master",                          "Getting latest vim configuration" ]
