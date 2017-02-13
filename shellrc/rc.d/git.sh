@@ -41,6 +41,7 @@ __git_shortcut  gls   log --stat
 
 # No completion for these
 alias gp='git push'
+alias gpf='git push --force'
 alias gs='git status'
 alias gc='git commit'
 alias gpr='git pull --rebase'
