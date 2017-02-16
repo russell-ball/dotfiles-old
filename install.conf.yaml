@@ -57,6 +57,12 @@
       force: true
       path: rbenv/default-gems
 
+    # tmux plugins
+    ~/.tmux/plugins/tpm:
+      create: true
+      force: true
+      path: tpm
+
 - shell:
     - [ "git submodule update --init --recursive",                                           "Installing submodules" ]
     - [ "cd fzf && ./install --bin && ./install --key-bindings --completion --no-update-rc", "Installing fzf" ]
