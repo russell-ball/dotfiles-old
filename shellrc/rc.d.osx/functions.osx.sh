@@ -31,24 +31,24 @@ function ec2-ip-from-name() {
   echo $(aws ec2 describe-instances --region us-east-1 --filters "Name=tag:Name,Values=\"$1\"" --output text --query 'Reservations[*].Instances[*].PrivateIpAddress')
 }
 
-function ec2-ip-from-tag() {
-  echo $(aws ec2 describe-instances --region us-east-1 --filters "Name=tag:$1,Values=\"$2\"" --output text --query 'Reservations[*].Instances[*].PrivateIpAddress')
-}
+function ec2-ip-from-tags {
+  local ec2_data selected_instance
 
-function ec2-ip-from-environment-tag() {
-  echo $(aws ec2 describe-instances --region us-east-1 --filters "Name=tag:environment,Values=\"$1\"" "Name=tag:$2,Values=\"$3\"" --output text --query 'Reservations[*].Instances[*].PrivateIpAddress' | head -n1)
-}
+  ec2_data=$( \
+    aws ec2 describe-instances \
+      --region us-east-1 \
+      --query 'Reservations[*].Instances[*].{Tags:Tags, IP:PrivateIpAddress}' \
+      --filters "Name=instance-state-name,Values=running"
+  )
 
-function ec2-ip-for-nexus-db() {
-  echo $(aws ec2 describe-instances --region us-east-1 --filters "Name=tag:environment,Values=\"$1\"" "Name=tag:provider_nexus_$2""_db,Values=\"true\"" "Name=tag:postgresql_replication_role,Values=\"master\"" --output text --query 'Reservations[*].Instances[*].PrivateIpAddress' | head -n1)
-}
+  selected_instance=$( \
+    echo "$ec2_data" \
+    | jq -r '.[][] | [ "IP=\(.IP)", (.Tags | map("\(.Key)=\(.Value|tostring)") | sort | join("|")) ] | join("|")' \
+    | sort \
+    | fzf --prompt="Select instance > " \
+  )
 
-function ec2-ip-for-nexus-search-db() {
-  echo $(aws ec2 describe-instances --region us-east-1 --filters "Name=tag:environment,Values=\"$1\"" "Name=tag:postgresql_replication_group,Values=\"search-$2\"" "Name=tag:provider_nexus_search_db,Values=\"true\"" "Name=tag:postgresql_replication_role,Values=\"master\"" --output text --query 'Reservations[*].Instances[*].PrivateIpAddress' | head -n1)
-}
-
-function ec2-ip-for-nexus-core-db() {
-  echo $(aws ec2 describe-instances --region us-east-1 --filters "Name=tag:environment,Values=\"$1\"" "Name=tag:provider_nexus_db,Values=\"true,core\"" "Name=tag:postgresql_replication,Values=\"true,master\"" --output text --query 'Reservations[*].Instances[*].PrivateIpAddress' | head -n1)
+  echo "$selected_instance" | sed 's/^.*[[:<:]]IP=\([^\|]*\)\|.*$/\1/'
 }
 
 function ssh-ec2-id() {
@@ -59,6 +59,10 @@ function ssh-ec2-name() {
   ssh $(ec2-ip-from-name "$1") "${@:2}"
 }
 
-function ssh-ec2-tag() {
-  ssh $(ec2-ip-from-tag "$1" "$2") "${@:3}"
+function ssh-ec2 {
+  local instance_ip
+
+  instance_ip=$(ec2-ip-from-tags)
+  echo "Connecting to $instance_ip..."
+  ssh $instance_ip
 }
