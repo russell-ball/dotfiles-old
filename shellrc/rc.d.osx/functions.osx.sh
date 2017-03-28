@@ -43,7 +43,7 @@ function ec2-ip-from-tags {
 
   selected_instance=$( \
     echo "$ec2_data" \
-    | jq -r '.[][] | [ "IP=\(.IP)", (.Tags | map("\(.Key)=\(.Value|tostring)") | sort | join("|")) ] | join("|")' \
+    | jq -r '.[][] | select(.Tags != null) | [ "IP=\(.IP)", (.Tags | map("\(.Key)=\(.Value|tostring)") | sort | join("|")) ] | join("|")' \
     | sort \
     | fzf --prompt="Select instance > " \
   )
