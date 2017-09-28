@@ -64,5 +64,16 @@ function ssh-ec2 {
 
   instance_ip=$(ec2-ip-from-tags)
   echo "Connecting to $instance_ip..."
-  ssh $instance_ip
+  history -s ssh -o UserKnownHostsFile=/dev/null "$instance_ip"
+  ssh -o UserKnownHostsFile=/dev/null "$instance_ip"
+}
+
+function pgcli-ec2 {
+  local instance_ip
+
+  instance_ip=$(ec2-ip-from-tags)
+  echo "Connecting to $instance_ip..."
+  pgcli -h "$instance_ip" -U jshafton
+  history -s pgcli -h "$instance_ip" -U jshafton
+  pgcli -h "$instance_ip" -U jshafton
 }
