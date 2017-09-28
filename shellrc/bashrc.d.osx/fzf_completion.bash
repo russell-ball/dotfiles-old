@@ -257,6 +257,7 @@ a_cmds="
   basename bunzip2 bzip2 chmod chown curl cp dirname du
   find git grep gunzip gzip hg jar
   ln ls mv open rm rsync scp
+  ansible-vault ansible-playbook
   svn tar unzip zip"
 x_cmds="kill ssh telnet unset unalias export"
 
