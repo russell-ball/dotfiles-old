@@ -27,6 +27,8 @@
   undopush = push -f origin HEAD^:master
   # Reset to head
   rhh = reset HEAD --hard
+  # Clean local branches
+  clean-branches = !"git checkout master; git branch -vv | grep ': gone]' | awk '{print $1}' | xargs git branch -d"
 
 [core]
   # Use custom `.gitignore` and `.gitattributes`
