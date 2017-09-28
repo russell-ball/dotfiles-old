@@ -15,6 +15,7 @@ Thumbs.db
 
 # Vim sessions
 Session.vim
+session*.vim
 
 # Ctags files
 tags
