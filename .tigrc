@@ -22,13 +22,18 @@ bind main grh !?@git reset %(commit) --hard
 
 # Open the commit on Github
 bind generic gho @sh -c "open 'https://'$(git remote -v | grep -Eo 'github.com[:/][^.]+' | head -1 | tr : /)'/commit/%(commit)'"
-bind generic ghpr @?hub -o -b %(branch) -h master
+bind generic ghpr @sh -c "hub pull-request -o"
 
 # Push local changes to origin
 bind main P ?@sh -c "git push origin `git rev-parse --abbrev-ref HEAD`"
 bind status P !git push origin
 bind stage P !git push origin
+
+# Git Push Force
 bind generic gpf !git push --force
+
+# Git Push Set Upstream
+bind generic gpsu !sh -c "git push -u origin `git rev-parse --abbrev-ref HEAD`"
 
 # Pull remote changes locally
 bind main p !@git pull
