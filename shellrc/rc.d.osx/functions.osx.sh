@@ -73,7 +73,7 @@ function pgcli-ec2 {
 
   instance_ip=$(ec2-ip-from-tags)
   echo "Connecting to $instance_ip..."
-  pgcli -h "$instance_ip" -U jshafton
-  history -s pgcli -h "$instance_ip" -U jshafton
-  pgcli -h "$instance_ip" -U jshafton
+  pgcli -h "$instance_ip" -U jshafton -d postgres
+  history -s pgcli -h "$instance_ip" -U jshafton -d postgres
+  pgcli -h "$instance_ip" -U jshafton -d postgres
 }
