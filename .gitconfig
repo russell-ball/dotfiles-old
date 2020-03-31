@@ -36,7 +36,6 @@
   attributesfile = ~/.gitattributes
   # Treat spaces before tabs, lines that are indented with 8 or more spaces, and all kinds of trailing whitespace as an error
   whitespace = space-before-tab,indent-with-non-tab,trailing-space
-	pager = diff-so-fancy | less --tabs=4 -RFX
 
 [color]
   # Use colors in Git commands that are capable of colored output when outputting to the terminal
@@ -91,11 +90,6 @@
   keepBackup = false
 [mergetool "vimdiff"]
   cmd = $EDITOR -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
-[mergetool "fugitive"]
-  cmd = vim -f -c \"Gdiff\" \"$MERGED\"
-
-[credential]
-	helper = osxkeychain
 
 [github]
 	user = jshafton
@@ -110,5 +104,8 @@
   cachetextconv = false
 
 [merge "ansible-vault"]
-    name = ansible-vault merge driver
-    driver = ansible-vault-merge -- %O %A %B %P
+  name = ansible-vault merge driver
+  driver = ansible-vault-merge -- %O %A %B %P
+
+[include]
+  path = "~/.gitconfig.local"

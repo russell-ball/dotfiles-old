@@ -19,6 +19,9 @@
     ~/.ackrc: .ackrc
     ~/.ctags: .ctags
     ~/.gitconfig: .gitconfig
+    ~/.gitconfig.local:
+      path: .gitconfig.osx
+      if: '[ $( uname ) = Darwin ]'
     ~/.gitignore: .gitignore
     ~/.gitmodules: .gitmodules
     ~/.hushlogin: .hushlogin
