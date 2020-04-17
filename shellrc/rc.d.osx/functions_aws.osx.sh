@@ -7,8 +7,10 @@ function ec2-ip-from-name() {
   echo $(aws ec2 describe-instances --region us-east-1 --filters "Name=tag:Name,Values=\"$1\"" --output text --query 'Reservations[*].Instances[*].PrivateIpAddress')
 }
 
-function ec2-ip-from-tags {
-  local ec2_data selected_instance
+function ec2-ip-from-tags() {
+  local filter ec2_data selected_instance
+
+  filter="$@"
 
   ec2_data=$( \
     aws ec2 describe-instances \
@@ -21,7 +23,7 @@ function ec2-ip-from-tags {
     echo "$ec2_data" \
     | jq -r '.[][] | select(.Tags != null) | [ "IP=\(.IP)", (.Tags | map("\(.Key)=\(.Value|tostring)") | sort | join("|")) ] | join("|")' \
     | sort \
-    | fzf --prompt="Select instance > " \
+    | fzf --prompt="Select instance > " --query "$filter" \
   )
 
   echo "$selected_instance" | sed 's/^.*[[:<:]]IP=\([^\|]*\)\|.*$/\1/'
@@ -57,10 +59,11 @@ function ssh-ec2-name() {
 function ssh-ec2 {
   local instance_ip
 
-  instance_ip=$(ec2-ip-from-tags)
+  instance_ip=$(ec2-ip-from-tags "$@")
   echo "Connecting to $instance_ip..."
-  history -s ssh -o UserKnownHostsFile=/dev/null "$instance_ip"
-  ssh -o UserKnownHostsFile=/dev/null "$instance_ip"
+  history -s ssh-ec2 "$@"
+  history -s ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "$instance_ip"
+  ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "$instance_ip"
 }
 
 function pgcli-ec2 {
