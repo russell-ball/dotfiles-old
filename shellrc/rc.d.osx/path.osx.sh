@@ -1,3 +1,6 @@
+# libpq includes psql and other utils
+[ -d "/usr/local/opt/libpq/bin" ] && export PATH="/usr/local/opt/libpq/bin:$PATH"
+
 # TODO: remove this? make it not-OS-specific?
 [ -d /usr/local/opt/coreutils/libexec ] && \
   export GNU_COREUTILS_PATH="/usr/local/opt/coreutils/libexec/gnubin" && \
