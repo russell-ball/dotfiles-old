@@ -7,6 +7,28 @@ function ec2-ip-from-name() {
   echo $(aws ec2 describe-instances --region us-east-1 --filters "Name=tag:Name,Values=\"$1\"" --output text --query 'Reservations[*].Instances[*].PrivateIpAddress')
 }
 
+function ec2-id-from-tags() {
+  local filter ec2_data selected_instance
+
+  filter="$@"
+
+  ec2_data=$( \
+    aws ec2 describe-instances \
+      --region us-east-1 \
+      --query 'Reservations[*].Instances[*].{Tags:Tags, ID:InstanceId}' \
+      --filters "Name=instance-state-name,Values=running"
+  )
+
+  selected_instance=$( \
+    echo "$ec2_data" \
+    | jq -r '.[][] | select(.Tags != null) | [ "ID=\(.ID)", (.Tags | map("\(.Key)=\(.Value|tostring)") | sort | join("|")) ] | join("|")' \
+    | sort \
+    | fzf --prompt="Select instance > " --query "$filter" \
+  )
+
+  echo "$selected_instance" | sed 's/^.*[[:<:]]ID=\([^\|]*\)\|.*$/\1/'
+}
+
 function ec2-ip-from-tags() {
   local filter ec2_data selected_instance
 
@@ -29,6 +51,10 @@ function ec2-ip-from-tags() {
   echo "$selected_instance" | sed 's/^.*[[:<:]]IP=\([^\|]*\)\|.*$/\1/'
 }
 
+function ec2-get-environment-name() {
+  aws ec2 describe-tags --filters "Name=key,Values=environment" "Name=resource-type,Values=instance" --query 'Tags[*].[Value]' --output text | sort -u | fzf | pbcopy
+}
+
 function rds-find-endpoint {
   local rds_data selected_instance
 
@@ -46,6 +72,27 @@ function rds-find-endpoint {
   )
 
   echo "$selected_instance"
+}
+
+function redshift-endpoint-from-tags() {
+  local filter redshift_data selected_instance
+
+  filter="$@"
+
+  redshift_data=$( \
+    aws redshift describe-clusters \
+      --region us-east-1 \
+      --query 'Clusters[*].{Tags:Tags, Endpoint:Endpoint.Address}'
+  )
+
+  selected_instance=$( \
+    echo "$redshift_data" \
+    | jq -r '.[][] | select(.Tags != null) | [ "ID=\(.ID)", (.Tags | map("\(.Key)=\(.Value|tostring)") | sort | join("|")) ] | join("|")' \
+    | sort \
+    | fzf --prompt="Select instance > " --query "$filter" \
+  )
+
+  echo "$selected_instance" | sed 's/^.*[[:<:]]ID=\([^\|]*\)\|.*$/\1/'
 }
 
 function ssh-ec2-id() {
@@ -67,12 +114,33 @@ function ssh-ec2 {
 }
 
 function pgcli-ec2 {
-  local instance_ip
+  local instance_ip database local_port remote_port
 
-  instance_ip=$(ec2-ip-from-tags)
+  database="${1-postgres}"
+  instance_ip="${2-$(ec2-ip-from-tags)}"
+  local_port="$(awk 'BEGIN{srand();print int(rand()*(63000-2000))+2000 }')"
+  remote_port=5432
+  remote_user="jshafton"
+
   echo "Connecting to $instance_ip..."
-  pgcli -h "$instance_ip" -U jshafton -d postgres
-  history -s pgcli -h "$instance_ip" -U jshafton -d postgres
+  ssh -f -o ExitOnForwardFailure=yes -L "$local_port:$instance_ip:$remote_port" "$remote_user@$instance_ip" sleep 10
+  pgcli -h "localhost" -p "$local_port" -U "$remote_user" -d "$database"
+  history -s pgcli-ec2 "$database" "$instance_ip"
+}
+
+function pgcli-redshift {
+  local instance_ip database local_port remote_port
+
+  database="${1-postgres}"
+  instance_ip="${2-$(ec2-ip-from-tags)}"
+  local_port="$(awk 'BEGIN{srand();print int(rand()*(63000-2000))+2000 }')"
+  remote_port=5432
+  remote_user="jshafton"
+
+  echo "Connecting to $instance_ip..."
+  ssh -f -o ExitOnForwardFailure=yes -L "$local_port:$instance_ip:$remote_port" "$remote_user@$instance_ip" sleep 10
+  pgcli -h "localhost" -p "$local_port" -U "$remote_user" -d "$database"
+  history -s pgcli-ec2 "$database" "$instance_ip"
 }
 
 function pgcli-rds {
