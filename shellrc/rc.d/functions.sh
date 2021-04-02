@@ -213,3 +213,4 @@ man () {
 function delKnownHost() {
   sed -e "$1d" -i '' ~/.ssh/known_hosts
 }
+

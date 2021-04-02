@@ -27,14 +27,40 @@ fcoc() {
 
 # fshow - git commit browser
 fshow() {
-  git log --graph --color=always \
-      --format="%C(auto)%h%d %an %s %C(black)%C(bold)%cr" "$@" |
-  fzf --ansi --no-sort --reverse --tiebreak=index --bind=ctrl-s:toggle-sort \
-      --bind "ctrl-m:execute:
-                (grep -o '[a-f0-9]\{7\}' | head -1 |
-                xargs -I % sh -c 'git show --color=always % | less -R') << 'FZF-EOF'
+  # param validation
+  if [[ ! `git log -n 1 $@ | head -n 1` ]] ;then
+    return
+  fi
+
+  # filter by file string
+  local filter
+  # param existed, git log for file if existed
+  if [ -n $@ ] && [ -f $@ ]; then
+    filter="-- $@"
+  fi
+
+  local pager
+  if hash delta 2>/dev/null; then
+    pager="delta --paging always"
+  else
+    pager="less -R"
+  fi
+
+  git log \
+    --graph \
+    --color=always \
+    --abbrev=7 \
+    --format='%C(auto)%h %an %C(blue)%s %C(yellow)%cr' \
+    $@ \
+  | fzf \
+    --ansi --no-sort --reverse --tiebreak=index \
+    --preview "f() { set -- \$(echo -- \$@ | grep -o '[a-f0-9]\{7\}'); [ \$# -eq 0 ] || git show \$1 $filter | $pager; }; f {}" \
+    --bind "ctrl-q:abort,∆:down,˚:up,ctrl-m:execute: \
+                (grep -o '[a-f0-9]\{7\}' | head -1 | \
+                xargs -I % sh -c 'git show --color=always % $filter | $pager') << 'FZF-EOF'
                 {}
-FZF-EOF"
+                FZF-EOF" \
+   --preview-window=right:60%
 }
 
 ###############################################################################
@@ -52,5 +78,14 @@ z() {
 # search code
 ###############################################################################
 fag() {
-  ag --nobreak --nonumbers --noheading . | fzf
+  local preview
+  if hash fsdat 2>/dev/null; then
+    local preview_cmd='search={};file=$(echo $search | cut -d':' -f 1 );'
+    preview_cmd+='line=$(echo $search | cut -d':' -f 2 );'
+    preview_cmd+='bat $file --paging=never --color=always --highlight-line $line'
+
+    ag --nobreak --noheading . | fzf -0 -1 --preview "$preview_cmd" --delimiter : --nth 4..
+  else
+    ag --nobreak --noheading . | fzf -0 -1 --delimiter : --nth 4..
+  fi
 }
