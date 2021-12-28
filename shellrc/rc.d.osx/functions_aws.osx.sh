@@ -23,7 +23,10 @@ function ec2-id-from-tags() {
     echo "$ec2_data" \
     | jq -r '.[][] | select(.Tags != null) | [ "ID=\(.ID)", (.Tags | map("\(.Key)=\(.Value|tostring)") | sort | join("|")) ] | join("|")' \
     | sort \
-    | fzf --prompt="Select instance > " --query "$filter" \
+    | fzf \
+      --prompt="Select instance > " \
+      --query "$filter" \
+      --preview "echo {} | sed 's/\|/\r\n/g'"
   )
 
   echo "$selected_instance" | sed 's/^.*[[:<:]]ID=\([^\|]*\)\|.*$/\1/'
@@ -37,15 +40,18 @@ function ec2-ip-from-tags() {
   ec2_data=$( \
     aws ec2 describe-instances \
       --region us-east-1 \
-      --query 'Reservations[*].Instances[*].{Tags:Tags, IP:PrivateIpAddress}' \
+      --query 'Reservations[*].Instances[*].{Tags:Tags, IP:PrivateIpAddress, PublicIP:PublicIpAddress, InstanceType:InstanceType}' \
       --filters "Name=instance-state-name,Values=running"
   )
 
   selected_instance=$( \
     echo "$ec2_data" \
-    | jq -r '.[][] | select(.Tags != null) | [ "IP=\(.IP)", (.Tags | map("\(.Key)=\(.Value|tostring)") | sort | join("|")) ] | join("|")' \
+    | jq -r '.[][] | select(.Tags != null) | [ "IP=\(.IP)", "PublicIP=\(.PublicIP)", "InstanceType=\(.InstanceType)", (.Tags | map("\(.Key)=\(.Value|tostring)") | sort | join("|")) ] | join("|")' \
     | sort \
-    | fzf --prompt="Select instance > " --query "$filter" \
+    | fzf \
+      --prompt="Select instance > " \
+      --query "$filter" \
+      --preview "echo {} | sed 's/\|/\r\n/g'"
   )
 
   echo "$selected_instance" | sed 's/^.*[[:<:]]IP=\([^\|]*\)\|.*$/\1/'
@@ -104,9 +110,16 @@ function ssh-ec2-name() {
 }
 
 function ssh-ec2 {
+  set -eo pipefail
+
   local instance_ip
 
   instance_ip=$(ec2-ip-from-tags "$@")
+
+  if [ -z "$instance_ip" ]; then
+    return 0
+  fi
+
   echo "Connecting to $instance_ip..."
   history -s ssh-ec2 "$@"
   history -s ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "$instance_ip"

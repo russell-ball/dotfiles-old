@@ -1,5 +1,5 @@
 [core]
-  pager = delta --dark
+  pager = delta --dark --paging=never
 
 [credential]
   helper = osxkeychain

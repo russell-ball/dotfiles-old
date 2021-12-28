@@ -1,3 +1,5 @@
+#! /usr/bin/env bash
+
 ###############################################################################
 # GIT
 ###############################################################################
@@ -13,7 +15,7 @@ fco() {
     sort -u          | awk '{print "\x1b[34;1mbranch\x1b[m\t" $1}') || return
   target=$(
     (echo "$tags"; echo "$branches") |
-    fzf-tmux -- --no-hscroll --ansi +m -d "\t" -n 2) || return
+    fzf --no-hscroll --ansi +m -d "\t" -n 2) || return
   git checkout $(echo "$target" | awk '{print $2}')
 }
 
@@ -59,8 +61,7 @@ fshow() {
                 (grep -o '[a-f0-9]\{7\}' | head -1 | \
                 xargs -I % sh -c 'git show --color=always % $filter | $pager') << 'FZF-EOF'
                 {}
-                FZF-EOF" \
-   --preview-window=right:60%
+                FZF-EOF"
 }
 
 ###############################################################################
@@ -78,8 +79,7 @@ z() {
 # search code
 ###############################################################################
 fag() {
-  local preview
-  if hash fsdat 2>/dev/null; then
+  if hash bat 2>/dev/null; then
     local preview_cmd='search={};file=$(echo $search | cut -d':' -f 1 );'
     preview_cmd+='line=$(echo $search | cut -d':' -f 2 );'
     preview_cmd+='bat $file --paging=never --color=always --highlight-line $line'

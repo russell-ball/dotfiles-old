@@ -1,4 +1,4 @@
-if ! which git &> /dev/null; then
+if ! hash git 2>/dev/null; then
   return
 fi
 
@@ -54,3 +54,5 @@ alias gcomp='git checkout master && git pull'
 alias gc-='git checkout -'
 alias gdm='git diff master'
 alias gdu='git diff @{upstream}'
+alias gru='git reset @{upstream} --hard'
+alias newbranch='git checkout master && git pull && git checkout -b '

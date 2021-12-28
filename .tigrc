@@ -50,13 +50,18 @@ bind status a !?git commit --amend
 bind status gmt !?git mergetool %(file)
 
 # Delete a file
-bind status D !@?rm %(file)
+# bind status D !@?rm %(file)
 
 # Checkout the selected commit
 bind main gco !?git checkout %(commit)
 
 # Checkout master
 bind main gcm !?git checkout master
+
+# Better diff
+bind diff D !git difftool %(commit) -- %(file)
+bind log D !git difftool %(commit) -- %(file)
+bind log D !git difftool %(commit) -- %(file)
 
 # Vim-like key bindings
 bind generic h scroll-left
