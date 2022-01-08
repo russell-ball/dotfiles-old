@@ -1,10 +1,20 @@
+#! /usr/bin/env bash
+
 # libpq includes psql and other utils
-[ -d "${HOMEBREW_PREFIX}/opt/libpq/bin" ] && export PATH="${HOMEBREW_PREFIX}/opt/libpq/bin:${PATH+:$PATH}"
+if [ -d "${HOMEBREW_PREFIX}/opt/libpq/bin" ]; then
+  path_prepend "${HOMEBREW_PREFIX}/opt/libpq/bin"
+fi;
 
 # TODO: remove this? make it not-OS-specific?
-[ -d ${HOMEBREW_PREFIX}/opt/coreutils/libexec ] && \
-  export GNU_COREUTILS_PATH="${HOMEBREW_PREFIX}/opt/coreutils/libexec/gnubin" && \
+if [ -d ${HOMEBREW_PREFIX}/opt/coreutils/libexec ]; then
+  export GNU_COREUTILS_PATH="${HOMEBREW_PREFIX}/opt/coreutils/libexec/gnubin"
   export GNU_COREUTILS_MANPATH="${HOMEBREW_PREFIX}/opt/coreutils/libexec/gnuman"
+fi;
 
-[ -d $GNU_COREUTILS_PATH ]    && export PATH="$GNU_COREUTILS_PATH:$PATH"
-[ -d $GNU_COREUTILS_MANPATH ] && export MANPATH="$GNU_COREUTILS_MANPATH:$PATH"
+if [ -d $GNU_COREUTILS_PATH ]; then
+  path_prepend "$GNU_COREUTILS_PATH"
+fi;
+
+if [ -d $GNU_COREUTILS_MANPATH ]; then
+  export MANPATH="$GNU_COREUTILS_MANPATH:$PATH"
+fi;

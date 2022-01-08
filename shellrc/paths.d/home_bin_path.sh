@@ -1,2 +1,2 @@
 # Add `~/bin` to the `$PATH`
-export PATH="$HOME/bin:$PATH"
+path_prepend "$HOME/bin"

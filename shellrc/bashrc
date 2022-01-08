@@ -14,18 +14,22 @@ if [[ $- != *i* ]] ; then
 fi
 
 # load all files from .shell/paths.d directory
-if [ -d $HOME/.shellrc/paths.d ]; then
-  for file in $HOME/.shellrc/paths.d/*.sh; do
-    [ -e "$file" ] && source $file
-  done
+if [[ -z $TMUX ]]; then
+  if [ -d $HOME/.shellrc/paths.d ]; then
+    for file in $HOME/.shellrc/paths.d/*.sh; do
+      [ -e "$file" ] && source $file
+    done
+  fi
 fi
 
 # load all files from .shell/paths.d.osx directory
-if [[ "$(uname)" == "Darwin" ]]; then
-  if [ -d $HOME/.shellrc/paths.d.osx ]; then
-    for file in $HOME/.shellrc/paths.d.osx/*.sh; do
-      [ -e "$file" ] && source $file
-    done
+if [[ -z $TMUX ]]; then
+  if [[ "$(uname)" == "Darwin" ]]; then
+    if [ -d $HOME/.shellrc/paths.d.osx ]; then
+      for file in $HOME/.shellrc/paths.d.osx/*.sh; do
+        [ -e "$file" ] && source $file
+      done
+    fi
   fi
 fi
 
