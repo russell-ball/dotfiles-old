@@ -19,6 +19,7 @@
     ~/.ackrc: .ackrc
     ~/.ctags: .ctags
     ~/.gitconfig: .gitconfig
+    ~/.lazygit: .lazygit
     ~/.gitconfig.local:
       path: .gitconfig.osx
       if: '[ $( uname ) = Darwin ]'
