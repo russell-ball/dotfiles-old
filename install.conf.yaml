@@ -67,6 +67,12 @@
       force: true
       path: tpm
 
+    # ranger file manager
+    ~/.config/ranger:
+      create: true
+      force: true
+      path: ranger
+
 - shell:
     - [ "git submodule update --init --recursive",                                           "Installing submodules" ]
     - [ "cd fzf && ./install --bin && ./install --key-bindings --completion --no-update-rc", "Installing fzf" ]
