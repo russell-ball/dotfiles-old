@@ -1,51 +1,183 @@
-# TODO: insert git prompt stuff from https://github.com/git/git/tree/master/contrib/completion
-
-# @gf3’s Sexy Bash Prompt, inspired by “Extravagant Zsh Prompt”
-# Shamelessly copied from https://github.com/gf3/dotfiles
-# Screenshot: http://i.imgur.com/s0Blh.png
-
-if tput setaf 1 &> /dev/null; then
-  tput sgr0
-  if [[ $(tput colors) -ge 256 ]] 2>/dev/null; then
-    MAGENTA=$(tput setaf 9)
-    ORANGE=$(tput setaf 172)
-    GREEN=$(tput setaf 190)
-    PURPLE=$(tput setaf 141)
-    WHITE=$(tput setaf 0)
-  else
-    MAGENTA=$(tput setaf 5)
-    ORANGE=$(tput setaf 4)
-    GREEN=$(tput setaf 2)
-    PURPLE=$(tput setaf 1)
-    WHITE=$(tput setaf 7)
-  fi
-  BOLD=$(tput bold)
-  RESET=$(tput sgr0)
-else
-  MAGENTA="\033[1;31m"
-  ORANGE="\033[1;33m"
-  GREEN="\033[1;32m"
-  PURPLE="\033[1;35m"
-  WHITE="\033[1;37m"
-  BOLD=""
-  RESET="\033[m"
+if [ ! -f "$HOME/.liquidprompt/liquidprompt" ]; then
+  exit;
 fi
 
-export MAGENTA
-export ORANGE
-export GREEN
-export PURPLE
-export WHITE
-export BOLD
-export RESET
+#############
+# BEHAVIOUR #
+#############
 
-function parse_git_dirty() {
-  [[ $(git status 2> /dev/null | tail -n1) != *"working tree clean"* ]] && echo "*"
-}
+# Display the battery level in more urgent color when the level is below this threshold.
+# Recommended value is 75
+LP_BATTERY_THRESHOLD=75
 
-function parse_git_branch() {
-  git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/\1$(parse_git_dirty)/"
-}
+# Display the load average over the past minute when above this threshold.
+# This value is scaled per CPU, so on a quad-core machine, the load average
+# would need to be 2.40 or greater to be displayed.
+# Recommended value is 0.60
+LP_LOAD_THRESHOLD=0.60
 
-export PS1="\[${BOLD}${MAGENTA}\]\u \[$WHITE\]at \[$ORANGE\]\h \[$WHITE\]in \[$GREEN\]\w\[$WHITE\]\$([[ -n \$(git branch 2> /dev/null) ]] && echo \" on \")\[$PURPLE\]\$(parse_git_branch)\[$WHITE\]\n\$ \[$RESET\]"
-export PS2="\[$ORANGE\]→ \[$RESET\]"
+# Display the temperature when the temperate is above this threshold (in
+# degrees Celsius).
+# Recommended value is 60
+LP_TEMP_THRESHOLD=60
+
+# Use the shorten path feature if the path is too long to fit in the prompt
+# line.
+# Recommended value is 1
+LP_ENABLE_SHORTEN_PATH=1
+
+# The maximum percentage of the screen width used to display the path before
+# removing the center portion of the path and replacing with '...'.
+# Recommended value is 35
+LP_PATH_LENGTH=35
+
+# The number of directories (including '/') to keep at the beginning of a
+# shortened path.
+# Recommended value is 2
+LP_PATH_KEEP=2
+
+# Determine if the hostname should always be displayed, even if not connecting
+# through network.
+# Defaults to 0 (do not display hostname when locally connected)
+# set to 1 if you want to always see the hostname
+# set to -1 if you want to never see the hostname
+LP_HOSTNAME_ALWAYS=0
+
+# Use the fully qualified domain name (FQDN) instead of the short hostname when
+# the hostname is displayed
+LP_ENABLE_FQDN=0
+
+# When to display the user name:
+# 1: always display the user name
+# 0: hide the logged user (always display different users)
+# -1: never display the user name
+# Default value is 1
+LP_USER_ALWAYS=1
+
+# Display the actual values of load/batteries along with their
+# corresponding marks. Set to 0 to only print the colored marks.
+# Defaults to 1 (display percentages)
+LP_PERCENTS_ALWAYS=1
+
+# Use the permissions feature and display a red ':' before the prompt to show
+# when you don't have write permission to the current directory.
+# Recommended value is 1
+LP_ENABLE_PERM=1
+
+# Enable the proxy detection feature.
+# Recommended value is 1
+LP_ENABLE_PROXY=1
+
+# Enable the jobs feature.
+# Recommended value is 1
+LP_ENABLE_JOBS=1
+
+# Enable the detached sessions feature.
+# Default value is 1
+LP_ENABLE_DETACHED_SESSIONS=1
+
+# Enable the load feature.
+# Recommended value is 1
+LP_ENABLE_LOAD=1
+
+# Enable the battery feature.
+# Recommended value is 1
+LP_ENABLE_BATT=1
+
+# Enable the 'sudo credentials' feature.
+# Be warned that this may pollute the syslog if you don't have sudo
+# credentials, and the sysadmin might hate you.
+LP_ENABLE_SUDO=0
+
+# Enable the directory stack support.
+LP_ENABLE_DIRSTACK=0
+
+# Enable the VCS features with the root account.
+# Recommended value is 0
+LP_ENABLE_VCS_ROOT=0
+
+# Enable the Git special features.
+# Recommended value is 1
+LP_ENABLE_GIT=1
+
+# Enable the Subversion special features.
+# Recommended value is 1
+LP_ENABLE_SVN=1
+
+# Enable the Mercurial special features.
+# Recommended value is 1
+LP_ENABLE_HG=1
+
+# Enable the Fossil special features.
+# Recommended value is 1
+LP_ENABLE_FOSSIL=1
+
+# Enable the Bazaar special features.
+# Recommanded value is 1
+LP_ENABLE_BZR=1
+
+# Show time of when the current prompt was displayed.
+LP_ENABLE_TIME=1
+
+# Show runtime of the previous command if over LP_RUNTIME_THRESHOLD
+# Recommended value is 0
+LP_ENABLE_RUNTIME=0
+
+# Minimal runtime (in seconds) before the runtime will be displayed
+# Recommended value is 2
+LP_RUNTIME_THRESHOLD=2
+
+# Ring the terminal bell if the runtime of the previous command exceeded
+# LP_RUNTIME_BELL_THRESHOLD
+# Recommended value is 0
+LP_ENABLE_RUNTIME_BELL=0
+
+# Minimal runtime (in seconds) before the terminal bell will be rung.
+# Recommended value is 10
+LP_RUNTIME_BELL_THRESHOLD=10
+
+# Display the virtualenv that is currently activated, if any
+# Recommended value is 1
+LP_ENABLE_VIRTUALENV=1
+
+# Display the enabled software collections, if any
+# Recommended value is 1
+LP_ENABLE_SCLS=1
+
+# Show highest system temperature
+LP_ENABLE_TEMP=1
+
+# When showing the time, use an analog clock instead of numeric values.
+# Recommended value is 0
+LP_TIME_ANALOG=0
+
+# Use the prompt as the title of the terminal window
+# Recommended value is 0
+LP_ENABLE_TITLE=0
+
+# Enable Title for screen, byobu, and tmux
+LP_ENABLE_SCREEN_TITLE=0
+
+# Use different colors for the different hosts you SSH to
+LP_ENABLE_SSH_COLORS=0
+
+# Show the error code of the last command if it was not 0
+LP_ENABLE_ERROR=1
+
+# Specify an array of absolute paths in which all vcs will be disabled.
+# Ex: ("/root" "/home/me/large-remove-svn-repo")
+LP_DISABLED_VCS_PATHS=()
+
+# Put the command prompt on a newline
+LP_MARK_PREFIX=$'\n'
+
+# Use a local liquidpromptrc if it exists.
+# Can be helpful if you sync your primary config across machines, or if
+# there's a system-wide config at /etc/liquidpromptrc from which you'd
+# like to make only minor deviations.
+#LOCAL_RCFILE=$HOME/.liquidpromptrc.local
+#[ -f "$LOCAL_RCFILE" ] && source "$LOCAL_RCFILE"
+
+# vim: set et sts=4 sw=4 tw=120 ft=sh:
+
+source "$HOME/.liquidprompt/liquidprompt"

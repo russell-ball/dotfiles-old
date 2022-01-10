@@ -73,6 +73,12 @@
       force: true
       path: ranger
 
+    # liquid prompt
+    ~/.liquidprompt:
+      create: true
+      force: true
+      path: liquidprompt
+
 - shell:
     - [ "git submodule update --init --recursive",                                           "Installing submodules" ]
     - [ "cd fzf && ./install --bin && ./install --key-bindings --completion --no-update-rc", "Installing fzf" ]
