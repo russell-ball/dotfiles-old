@@ -54,12 +54,12 @@
     # custom scripts
     ~/bin: bin/
 
+    # asdf configuration
+    ~/.asdfrc: .asdfrc
+
     # Ruby configuration
     ~/.gemrc: .gemrc
-    ~/.rbenv/default-gems:
-      create: true
-      force: true
-      path: rbenv/default-gems
+    ~/.default-gems: .default-gems
 
     # tmux plugins
     ~/.tmux/plugins/tpm:
