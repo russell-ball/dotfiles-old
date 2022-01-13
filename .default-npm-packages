@@ -1,0 +1,8 @@
+yarn
+coffeescript
+jshint
+eslint
+coffeelint
+jsonlint
+neovim
+bash-language-server

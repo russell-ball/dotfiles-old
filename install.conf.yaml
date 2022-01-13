@@ -64,6 +64,12 @@
     ~/.gemrc: .gemrc
     ~/.default-gems: .default-gems
 
+    # node.js configuration
+    ~/.default-npm-packages: .default-npm-packages
+
+    # python configuration
+    ~/.default-python-packages: .default-python-packages
+
     # tmux plugins
     ~/.tmux/plugins/tpm:
       create: true
