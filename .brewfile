@@ -1,0 +1,78 @@
+brew "fd"
+brew "elinks"
+brew "mackup"
+brew "tig"
+brew "neovim"
+
+# CLI speed test
+tap "teamookla/speedtest"
+brew "speedtest"
+
+# logitech drivers for mouse/keyboard
+tap "homebrew/cask-drivers"
+cask "homebrew/cask-drivers/logitech-options"
+
+# PHP for Alfred github plugin
+brew "argon2"
+brew "aspell"
+brew "freetds"
+brew "gd"
+brew "icu4c"
+brew "libsodium"
+brew "libzip"
+brew "tidy-html5"
+brew "php", args: ["ignore-dependencies"]
+# END PHP
+
+cask "vimr"
+cask "authy"
+cask "datagrip"
+cask "dash"
+
+# personal apps
+cask "marta"
+cask "dropbox"
+cask "vlc"
+cask "nvalt"
+cask "caffeine"
+cask "telegram"
+cask "signal"
+cask "calibre"
+cask "android-messages"
+cask "remember-the-milk"
+cask "kindle"
+cask "send-to-kindle"
+cask "xbar"
+cask "transmission"
+cask "plex-media-server"
+cask "notion"
+cask "yt-music"
+cask "google-drive"
+cask "skitch"
+
+# paid apps
+cask "bartender"
+cask "daisydisk"
+cask "istat-menus"
+cask "alfred"
+
+brew "tmuxinator-completion"
+
+tap "homebrew/cask-fonts"
+cask "font-source-code-pro"
+cask "font-source-code-pro-for-powerline"
+cask "font-anonymice-powerline"
+cask "font-droid-sans-mono-for-powerline"
+cask "font-inconsolata-for-powerline"
+cask "font-meslo-for-powerline"
+cask "font-ubuntu-mono-derivative-powerline"
+cask "font-meslo-lg-nerd-font"
+cask "font-jetbrains-mono-nerd-font"
+cask "font-hack-nerd-font"
+cask "font-victor-mono-nerd-font"
+
+brew "mas" # required for using mas in a brewfile
+mas "Kiwi for Gmail", id: 986304488
+mas "HyperDock", id: 449830122
+mas "Paprika Recipe Manager", id: 1303222628
+mas "Bitwarden", id: 1352778147

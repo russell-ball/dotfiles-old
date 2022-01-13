@@ -57,6 +57,9 @@
     # asdf configuration
     ~/.asdfrc: .asdfrc
 
+    # homebrew
+    ~/.brewfile: .brewfile
+
     # Ruby configuration
     ~/.gemrc: .gemrc
     ~/.default-gems: .default-gems
