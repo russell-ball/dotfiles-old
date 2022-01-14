@@ -12,3 +12,13 @@ cd "${BASEDIR}"
 git submodule update --init --recursive
 
 "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${BASEDIR}" -c "${CONFIG}" "${@}"
+
+if [[ "$(uname)" == "Darwin" ]]; then
+  (
+    echo "Configuring macos defaults..."
+    cd "${BASEDIR}"
+    ./defaults.macos/defaults_user.sh
+    ./defaults.macos/defaults_sudo.sh
+    ./defaults.macos/configure_dock.sh
+  )
+fi
