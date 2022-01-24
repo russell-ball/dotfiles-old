@@ -91,3 +91,6 @@ done
 
 # Reload the shell (i.e. invoke as a login shell)
 alias reload="exec $SHELL -l"
+
+alias sl="aws s3 ls"
+alias sc="aws s3 cp"
