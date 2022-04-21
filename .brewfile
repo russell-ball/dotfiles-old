@@ -72,7 +72,3 @@ cask "font-hack-nerd-font"
 cask "font-victor-mono-nerd-font"
 
 brew "mas" # required for using mas in a brewfile
-mas "Kiwi for Gmail", id: 986304488
-mas "HyperDock", id: 449830122
-mas "Paprika Recipe Manager", id: 1303222628
-mas "Bitwarden", id: 1352778147

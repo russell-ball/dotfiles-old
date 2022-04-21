@@ -9,10 +9,10 @@ alias gip='dp;LOG_LEVEL=DEBUG bin/import-project 00000001 | node_modules/.bin/bu
 alias gig='LOG_LEVEL=DEBUG bin/gulp-core import:s3global --force | node_modules/.bin/bunyan'
 alias gw="dp; ENABLE_ACTIVITY_LOGGING=false LOG_LEVEL=DEBUG node_modules/.bin/gulp | node_modules/.bin/bunyan"
 alias gt="dp; NODE_ENV=test LOG_LEVEL=FATAL node_modules/.bin/gulp test --silent -r nyan"
-alias pgpnlc="pgcli postgres://provider_nexus:123456abcdef@localhost:15432/provider_nexus_core"
-alias pgpnls="pgcli postgres://provider_nexus:123456abcdef@localhost:25432/provider_nexus_search"
-alias pgpnltc="pgcli postgres://provider_nexus:123456abcdef@localhost:35432/provider_nexus_core"
-alias pgpnlts="pgcli postgres://provider_nexus:123456abcdef@localhost:45432/provider_nexus_search"
+alias pgpnlc="pgcli postgres://provider_nexus:provider_nexus@localhost:25432/provider_nexus_core"
+alias pgpnls="pgcli postgres://provider_nexus:provider_nexus@localhost:25432/provider_nexus_search"
+alias pgpnltc="pgcli postgres://provider_nexus:provider_nexus@localhost:25432/provider_nexus_core_test"
+alias pgpnlts="pgcli postgres://provider_nexus:provider_nexus@localhost:25432/provider_nexus_search_test"
 
 #N360
 alias ne="dn; nvim ."
@@ -25,7 +25,7 @@ alias sshnsr="ssh rball@10.10.51.120"
 alias sshnpa="ssh rball@10.11.51.45"
 alias sshnps="ssh rball@10.11.51.12"
 alias sshnpr="ssh rball@10.11.51.254"
-alias pgnl="pgcli postgres://developer@localhost:55432/network360"
+alias pgnl="pgcli postgres://developer:developer@localhost:15432/network360"
 alias pgnsb="pgcli postgres://rball@10.10.11.203/network360"
 alias pgnsw="pgcli postgres://rball@10.10.11.229/network360"
 alias pgnsg="pgcli postgres://rball@10.10.11.232/network360"
