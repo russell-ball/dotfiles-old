@@ -1,7 +1,8 @@
 # General
 alias vu='dotenv vagrant up'
 alias nn="nvim ~/Dropbox/Notes/n360"
-
+alias pge='pgcli-ec2'
+alias sshe='ssh-ec2'
 
 #API
 alias dp='cd ~/src/provider-nexus-api'
@@ -26,10 +27,12 @@ alias sshnpa="ssh rball@10.11.51.45"
 alias sshnps="ssh rball@10.11.51.12"
 alias sshnpr="ssh rball@10.11.51.254"
 alias pgnl="pgcli postgres://developer:developer@localhost:15432/network360"
-alias pgnsb="pgcli postgres://rball@10.10.11.203/network360"
-alias pgnsw="pgcli postgres://rball@10.10.11.229/network360"
+alias pgnsb="pgcli postgres://rball@10.10.11.115/network360"
+alias pgnse="pgcli postgres://rball@10.10.11.203/network360"
+alias pgnsw="pgcli postgres://rball@10.10.11.137/network360"
+alias pgnsa="pgcli postgres://rball@10.10.11.229/network360"
 alias pgnsg="pgcli postgres://rball@10.10.11.232/network360"
-alias pgnp="pgcli postgres://rball@10.11.11.151/network360"
+alias pgnp="pgcli postgres://rball@10.11.11.87/network360 --ssh-tunnel ci.strenuus.com 2> /dev/null"
 
 #PDM
 alias df="cd ~/src/pdm-contracts-api"
@@ -47,3 +50,7 @@ alias pgpdmp="pgcli -h pdm-contracts-production-p180605-pdm-contracts-rds-cluste
 
 git config --global user.email "rball@strenuus.com"
 git config --global user.name "Russell Ball"
+
+alias k="kubectl"
+
+
