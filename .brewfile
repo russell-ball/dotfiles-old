@@ -8,10 +8,6 @@ brew "neovim"
 tap "teamookla/speedtest"
 brew "speedtest"
 
-# logitech drivers for mouse/keyboard
-tap "homebrew/cask-drivers"
-cask "homebrew/cask-drivers/logitech-options"
-
 # PHP for Alfred github plugin
 brew "argon2"
 brew "aspell"
@@ -35,25 +31,18 @@ cask "dropbox"
 cask "vlc"
 cask "nvalt"
 cask "caffeine"
-cask "telegram"
 cask "signal"
 cask "calibre"
-cask "android-messages"
 cask "remember-the-milk"
 cask "kindle"
 cask "send-to-kindle"
 cask "xbar"
 cask "transmission"
-cask "plex-media-server"
 cask "notion"
-cask "yt-music"
 cask "google-drive"
 cask "skitch"
 
 # paid apps
-cask "bartender"
-cask "daisydisk"
-cask "istat-menus"
 cask "alfred"
 
 brew "tmuxinator-completion"
