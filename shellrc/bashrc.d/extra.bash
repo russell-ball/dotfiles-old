@@ -27,11 +27,8 @@ alias sshnpa="ssh rball@10.11.51.45"
 alias sshnps="ssh rball@10.11.51.12"
 alias sshnpr="ssh rball@10.11.51.254"
 alias pgnl="pgcli postgres://developer:developer@localhost:15432/network360"
-alias pgnsb="pgcli postgres://rball@10.10.11.115/network360"
-alias pgnse="pgcli postgres://rball@10.10.11.203/network360"
-alias pgnsw="pgcli postgres://rball@10.10.11.137/network360"
-alias pgnsa="pgcli postgres://rball@10.10.11.229/network360"
-alias pgnsg="pgcli postgres://rball@10.10.11.232/network360"
+alias pgnsb="pgcli postgres://rball@10.10.11.115/network360 --ssh-tunnel ci.strenuus.com 2> /dev/null"
+alias pgnsw="pgcli postgres://rball@10.10.11.137/network360 --ssh-tunnel ci.strenuus.com 2> /dev/null"
 alias pgnp="pgcli postgres://rball@10.11.11.87/network360 --ssh-tunnel ci.strenuus.com 2> /dev/null"
 
 #PDM

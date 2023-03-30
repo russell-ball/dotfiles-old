@@ -67,4 +67,6 @@ fi
 source <(kubectl completion bash)
 complete -o default -F __start_kubectl k
 
-source /Users/russellball/.docker/init-bash.sh || true # Added by Docker Desktop
+source /Users/rball/.docker/init-bash.sh || true # Added by Docker Desktop
+
+source /Users/rball/.docker/init-bash.sh || true # Added by Docker Desktop

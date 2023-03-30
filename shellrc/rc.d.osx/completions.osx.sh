@@ -6,7 +6,7 @@ complete -W "NSGlobalDomain" defaults
 complete -o "nospace" -W "Contacts Calendar Dock Finder Mail Safari iTunes SystemUIServer Terminal Twitter" killall
 
 # Add aws cli
-complete -C '/Users/russellball/.asdf/shims/aws_completer' aws
+complete -C '/Users/rball/.asdf/shims/aws_completer' aws
 
 # Add in all the completions installed with homebrew
 if type brew &>/dev/null
