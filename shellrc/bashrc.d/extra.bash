@@ -1,8 +1,9 @@
 # General
-alias vu='dotenv vagrant up'
-alias nn="nvim ~/Dropbox/Notes/n360"
 alias pge='pgcli-ec2'
 alias sshe='ssh-ec2'
+
+#ansible
+alias da='cd ~/src/ansible'
 
 #API
 alias dp='cd ~/src/provider-nexus-api'
