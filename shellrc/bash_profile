@@ -26,4 +26,6 @@ export JAVA_HOME="/Users/rball/Library/Caches/Coursier/arc/https/github.com/Adop
 export PATH="$PATH:/Users/rball/Library/Application Support/Coursier/bin"
 # <<< coursier install directory <<<
 
+
 source /Users/rball/.docker/init-bash.sh || true # Added by Docker Desktop
+export PATH="/opt/homebrew/opt/curl/bin:$PATH"

@@ -4,6 +4,9 @@ alias sshe='ssh-ec2'
 
 #ansible
 alias da='cd ~/src/ansible'
+alias r='ranger'
+alias nf='nvim $(fzf)'
+alias ea='nvim ~/dotfiles-old/shellrc/bashrc.d/extra.bash'
 
 #API
 alias dp='cd ~/src/provider-nexus-api'
@@ -48,7 +51,5 @@ alias pgpdmp="pgcli -h pdm-contracts-production-p180605-pdm-contracts-rds-cluste
 
 git config --global user.email "rball@strenuus.com"
 git config --global user.name "Russell Ball"
-
-alias k="kubectl"
 
 
